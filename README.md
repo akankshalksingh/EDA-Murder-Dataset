@@ -16,5 +16,5 @@ In this project, I explored the existing datasets in R to conduct exploratory da
 
 7. Exploratory data analysis (EDA): We suggested exploring other data examination and visualization techniques to gain further insights into the dataset. This might include calculating summary statistics, identifying outliers, creating bar plots, scatter plots with different variables, or conducting statistical tests for hypothesis testing.
 
-Throughout the project, we utilized various R functions and libraries such as dplyr, ggplot2, and ggpubr to manipulate, analyze, and visualize the data. These tools and techniques enable us to gain a deeper understanding of the dataset, identify patterns, and communicate insights effectively.
+Throughout the project, I utilized various R functions and libraries such as dplyr, ggplot2, and ggpubr to manipulate, analyze, and visualize the data. These tools and techniques enable us to gain a deeper understanding of the dataset, identify patterns, and communicate insights effectively.
 
