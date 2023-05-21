@@ -1,0 +1,181 @@
+---
+title: "Project 2 - Akanksha Singh"
+author: "Akanksha Singh"
+date: "2023-05-20"
+output: html_document
+---
+
+## Project 2
+
+#### This project involved exploratory data analysis (EDA) using the "murders" dataset in R. We loaded the dataset, examined its structure, and performed descriptive data analysis. We visualized the data using scatter plots, histograms, and boxplots to gain insights into the variables. Additionally, we suggested further data examination and visualization techniques for comprehensive EDA. The project utilized R libraries such as dplyr, ggplot2, and ggpubr for data manipulation and visualization.
+
+#### Install and load the package
+
+install.packages("dslabs")
+
+```{r}
+library(dslabs)
+```
+
+### 1. Load the US murders dataset
+
+```{r}
+data(murders)
+```
+
+### 2. Data Examination: What function in R provides column names? What are the column names used by the data frame for these five variables? Write a code to show column names.
+
+#### The function `colnames()` provides column names in R.
+
+The column names used by the data frame for these five variables are: state, abb, region, population, and total.
+
+```{r}
+colnames(murders)
+```
+
+### 3. Data Examination: Use the function str(), head(), and tail() to examine the structure of the 'murders' and the data. What do these functions display? What other functions in R would be useful for basic data examination?
+
+#### The function `str()` displays the structure of the 'murders' dataset, showing the data types and the first few values of each variable.
+
+```{r}
+str(murders)
+```
+
+#### The function `head()` displays the first few rows of the 'murders' dataset.
+
+```{r}
+head(murders)
+```
+
+#### The function `tail()` displays the last few rows of the 'murders' dataset.
+
+```{r}
+tail(murders)
+```
+
+#### Other functions that can be useful for basic data examination in R include `summary()`, `dim()`, `nrow()`, `ncol()`, `summary()`, and `table()`.
+
+### 4. Descriptive data analysis: Which state has the maximum number of murders? Write a code to answer this question? Suggest other potential data examination options.
+
+#### To find the state with the maximum number of murders, we can use the `which.max()` function on the 'total' variable.The `which.max()`function returns the position of the first occurrence of the maximum value.
+
+```{r}
+state_max_murders <- murders$state[which.max(murders$total)]
+state_max_murders
+```
+
+#### Other potential data examination options include calculating summary statistics such as mean, median, and standard deviation for the 'total' variable, examining the distribution of murders by region or population, and exploring any relationships or patterns in the data using correlation analysis or regression models.
+
+### 5. Data visualization: The plot function can be used to make scaterplots. Use the plot() function to make a plot of total murders versus population -divide the population by a million (10\^6) to get the scale appropriate for the plot. Make sure to label the plot axes.
+
+#### Create a scatter plot of total murders versus population
+
+```{r}
+population_millions <- murders$population / 1e6
+plot(population_millions, murders$total,
+     xlab = "Population (in millions)",
+     ylab = "Total Murders")
+
+```
+
+### 7. Data visualization: Histograms are a powerful graphical summary of a list of numbers that gives you a general overview of the types of values you have.
+
+#### Plot the histogram of murder rate
+
+```{r}
+murder_rate <- (murders$total / murders$population) * 100000
+hist(murder_rate,
+     xlab = "Murder Rate per 100,000",
+     main = "Histogram of Murder Rate")
+
+```
+
+### 7. Boxplot provide a terser summary than histograms, but they are easier to stack with other boxplot. Use them to compare the different regions.
+
+#### Create a boxplot of murder rates by region
+
+```{r}
+boxplot(murder_rate ~ region, data = murders,
+        xlab = "Region", ylab = "Murder Rate per 100,000",
+        main = "Comparison of Murder Rates by Region")
+```
+
+### 8. Explore other possible data examinations / visualization to conduct exploratory data analysis (EDA).
+
+#### In addition to histograms and boxplot, there are several other data examination and visualization techniques you can use for exploratory data analysis (EDA). Some possibilities include:
+
+1.  Line plots: Use line plots to visualize trends or patterns in data over time or across a continuous variable.
+2.  Heatmaps: Create heatmaps to explore relationships or patterns between multiple variables, especially useful for large datasets.
+3.  Violin plots: Combine aspects of box plots and kernel density plots to show the distribution of a variable.
+4.  Pair plots: Generate a grid of scatter plots to visualize pairwise relationships between multiple variables.
+5.  Geographic maps: If your data has a spatial component, consider visualizing it on maps using geographic mapping techniques.
+
+#### Create a violin plot of murder rates by region
+
+```{r}
+library(ggplot2)
+ggplot(murders, aes(x = region, y = murder_rate)) +
+  geom_violin(fill = "lightblue") +
+  xlab("Region") + ylab("Murder Rate") +
+  ggtitle("Murder Rate by Region")
+
+```
+
+### 9. Use the following code to explore the dataset 'diamonds' in ggplot2 library of R. What do the libraries provide? What does %\>% mean in R? What would the result show? What is a tibble, and what is the difference with a data frame?
+
+#### 1. What do the libraries provide?
+
+-   dplyr: The dplyr library provides a set of functions for data manipulation and transformation. It offers an intuitive grammar of data manipulation, allowing you to easily filter, arrange, group, and summarize data.
+-   ggplot2: The ggplot2 library is a powerful data visualization package that follows the grammar of graphics principles. It provides a flexible and layered approach to create visually appealing and customizable plots.
+-   ggpubr: The ggpubr library extends the capabilities of ggplot2 in R by providing additional features for creating publication-ready plots. It offers custom themes, annotations, plot arrangements, and easy customization options to enhance the appearance and formatting of plots. These features make it easier to create visually appealing and informative visualizations for presentation and publication purposes.
+
+2.  What does %\>% mean in R?
+
+The %\>% symbol in R is called the pipe operator or the magrittr pipe. It is used in the context of the dplyr library (as well as other packages like tidyverse), and it allows you to chain multiple operations together by passing the output of one function as the first argument of the next function. This makes the code more readable and concise, especially when performing multiple data manipulation steps in a sequence.
+
+3.  What would the result show?
+
+The given code performs the following operations: - It takes the diamonds dataset as input. - It groups the dataset by the "cut" variable using the group_by() function. - It then calculates the count of diamonds within each group using the summarise() function. - The resulting dataset with the "cut" variable and its corresponding counts is stored in the df variable.
+
+4.  What is a tibble, and what is the difference with a data frame?
+
+A tibble is an enhanced version of a data frame in R, provided by the tibble package (which is automatically loaded with dplyr). Tibbles are designed to be more user-friendly and provide improved printing, enhanced data manipulation functions, and better compatibility with other packages.
+
+The main differences between a tibble and a traditional data frame are:
+
+-   Printing format: Tibbles have a more concise and informative printing format, displaying only a few rows and columns by default, which makes it easier to view and work with large datasets.
+-   Data type checking: Tibbles have stricter data type checking compared to data frames, which helps prevent unintended type coercion and potential issues in data analysis workflows.
+-   Performance: In terms of performance, tibbles generally have similar or slightly improved performance compared to data frames.
+
+Following is an example:
+
+Install and load the package
+
+install.packages("dplyr") install.packages("ggplot2") install.packages("ggpubr")
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+theme_set(theme_pubr())
+
+# Exploring the diamonds dataset
+# Load the diamonds dataset
+data(diamonds)
+
+# Grouping and summarizing the data
+df <- diamonds %>%
+  group_by(cut) %>%
+  summarise(counts = n())
+
+# Printing the result
+df
+
+# Creating a bar plot of the counts by cut
+ggplot(df, aes(x = cut, y = counts)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  xlab("Cut") +
+  ylab("Counts") +
+  ggtitle("Counts of Diamonds by Cut")
+
+```
